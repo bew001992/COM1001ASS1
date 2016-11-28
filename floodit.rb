@@ -1,6 +1,4 @@
 require 'console_splash'
-collumns = 14
-rows = 9
 
 def get_board(width, height)
   # TODO: Implement this method
@@ -19,13 +17,20 @@ def get_board(width, height)
   # It is important that this method is used because
   # this will be used for checking the functionality
   # of your implementation.
+  board = Array.new(height){Array.new(width)}
+  (0...height).each do |x|
+    (0...width).each do |y|
+    board[x][y] = rand(12)
+    end
+  end
+puts board.to_s
 end
 
 # TODO: Implement everything else as described in the
 #       assignment brief.
 def splashScreen(height,width)
   splash = ConsoleSplash.new(height,width)
-  splash.write_header("Splash It", "Ben Williams", "0.1.0")
+  splash.write_header("Flood It", "Ben Williams", "0.1.0")
   splash.write_horizontal_pattern("v^")
   splash.write_vertical_pattern("|")
   splash.splash
@@ -33,7 +38,7 @@ def splashScreen(height,width)
   `clear`
 end
 
-def mainMenu(q)
+def mainMenu(q,gWidth,gHeight)
   quit = q
   highScore = 0
   begin
@@ -49,9 +54,9 @@ def mainMenu(q)
     print "Please enter your choice: "
     input = gets.chomp.upcase
     if input == 'S' then 
-      mainGame()
+      get_board(gWidth,gHeight)
       elsif input == 'C'
-      changeSize()
+      changeSize(gWidth,gHeight)
       elsif input == 'Q' then 
           quit = true 
       end
@@ -60,8 +65,12 @@ def mainMenu(q)
     end until quit == true
  end
      
-def changeSize(collumns, rows)
- 
+def changeSize(width, height)
+ print "Width '(Currently #{width})?"
+  width = gets.chomp.to_i
+  print "Height '(Currently #{height})?"
+  height= gets.chomp.to_i
+  mainMenu(false,width,height)
 end
       splashScreen(20,30)
-     mainMenu(false)
+     mainMenu(false,14,9)
