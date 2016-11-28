@@ -1,4 +1,6 @@
 require 'console_splash'
+require 'colorize'
+require 'colorized_string'
 
 def get_board(width, height)
   # TODO: Implement this method
@@ -18,19 +20,55 @@ def get_board(width, height)
   # this will be used for checking the functionality
   # of your implementation.
   board = Array.new(height){Array.new(width)}
+  #initializes game board with random colour in each cell
   (0...height).each do |x|
     (0...width).each do |y|
-    board[x][y] = rand(12)
+    z = rand(11)
+      case z
+        when 0,1
+        board[x][y] = :red
+        when 2,3
+        board[x][y] = :blue
+        when 4,5
+        board[x][y] = :green
+        when 6,7
+        board[x][y] =  :yellow
+        when 8,9
+        board[x][y] = :cyan
+        when 10,11
+        board[x][y] = :magenta
+      end
     end
   end
-puts board.to_s
+  #prints out gameboard 
+  (0...height).each do |x|
+    (0...width).each do |y|
+      z = board[x][y]
+      case z
+        when :red
+        print ColorizedString[" "].colorize( :background => :red)
+        when :blue
+        print ColorizedString[" "].colorize( :background => :blue)
+        when :green
+        print ColorizedString[" "].colorize( :background => :green)
+        when :yellow
+        print ColorizedString[" "].colorize( :background => :yellow)
+        when :cyan
+        print ColorizedString[" "].colorize( :background => :cyan)
+        when :magenta
+        print ColorizedString[" "].colorize( :background => :magenta)
+      end
+    end
+    puts
+  end
+
 end
 
 # TODO: Implement everything else as described in the
 #       assignment brief.
 def splashScreen(height,width)
   splash = ConsoleSplash.new(height,width)
-  splash.write_header("Flood It", "Ben Williams", "0.1.0")
+  splash.write_header("Flood It", "Ben Williams", "0.4.0")
   splash.write_horizontal_pattern("v^")
   splash.write_vertical_pattern("|")
   splash.splash
